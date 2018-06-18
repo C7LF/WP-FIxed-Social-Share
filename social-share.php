@@ -48,51 +48,60 @@ function social_share_settings()
 {
     add_settings_section("social_share_config_section", "", null, "social-share");
  
+    add_settings_field("social-share-enable", "Enable / Disable", "social_share_enable_checkbox", "social-share", "social_share_config_section");
     add_settings_field("social-share-facebook", "Show Facebook button?", "social_share_facebook_checkbox", "social-share", "social_share_config_section");
     add_settings_field("social-share-twitter", "Show Twitter share button?", "social_share_twitter_checkbox", "social-share", "social_share_config_section");
     add_settings_field("social-share-linkedin", "Show LinkedIn share button?", "social_share_linkedin_checkbox", "social-share", "social_share_config_section");
     add_settings_field("social-share-google", "Show Google+ share button?", "social_share_google_checkbox", "social-share", "social_share_config_section");
     add_settings_field("social-share-mail", "Show Email share button?", "social_share_mail_checkbox", "social-share", "social_share_config_section");
  
+    register_setting("social_share_config_section", "social-share-enable");
     register_setting("social_share_config_section", "social-share-facebook");
     register_setting("social_share_config_section", "social-share-twitter");
     register_setting("social_share_config_section", "social-share-linkedin");
     register_setting("social_share_config_section", "social-share-google");
     register_setting("social_share_config_section", "social-share-mail");
 }
- 
+function social_share_enable_checkbox()
+{  
+   ?>
+        <input type="checkbox" name="social-share-enable" value="1" <?php checked(1, get_option('social-share-enable'), true); ?> />
+        <hr />
+   <?php
+}
+
 function social_share_facebook_checkbox()
 {  
    ?>
-        <input type="checkbox" name="social-share-facebook" value="1" <?php checked(1, get_option('social-share-facebook'), true); ?> /> Check for Yes
+        <input type="checkbox" name="social-share-facebook" value="1" <?php checked(1, get_option('social-share-facebook'), true); ?> />
    <?php
 }
 
 function social_share_twitter_checkbox()
 {  
    ?>
-        <input type="checkbox" name="social-share-twitter" value="1" <?php checked(1, get_option('social-share-twitter'), true); ?> /> Check for Yes
+        <input type="checkbox" name="social-share-twitter" value="1" <?php checked(1, get_option('social-share-twitter'), true); ?> />
    <?php
 }
 
 function social_share_linkedin_checkbox()
 {  
    ?>
-        <input type="checkbox" name="social-share-linkedin" value="1" <?php checked(1, get_option('social-share-linkedin'), true); ?> /> Check for Yes
+        <input type="checkbox" name="social-share-linkedin" value="1" <?php checked(1, get_option('social-share-linkedin'), true); ?> />
    <?php
 }
 
 function social_share_google_checkbox()
 {  
    ?>
-        <input type="checkbox" name="social-share-google" value="1" <?php checked(1, get_option('social-share-google'), true); ?> /> Check for Yes
+        <input type="checkbox" name="social-share-google" value="1" <?php checked(1, get_option('social-share-google'), true); ?> />
    <?php
 }
 
 function social_share_mail_checkbox()
 {  
    ?>
-        <input type="checkbox" name="social-share-mail" value="1" <?php checked(1, get_option('social-share-mail'), true); ?> /> Check for Yes
+        <input type="checkbox" name="social-share-mail" value="1" <?php checked(1, get_option('social-share-mail'), true); ?> />
    <?php
 }
  
@@ -140,4 +149,11 @@ function add_social_share_icons($content) {
     echo $content =  $html . $content;
 
 }
-add_action("wp_footer", "add_social_share_icons");
+function showSidebar() {
+    add_action("wp_footer", "add_social_share_icons");
+}
+
+if(get_option("social-share-enable") == 1) {
+    showSidebar();
+};
+
